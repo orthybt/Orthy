@@ -9,12 +9,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ArcsApp extends Application {
+public class OrthyApp extends Application {
 	private String guiPath = "Orthy.fxml";
 
 	@Override
 	public void start(Stage stage) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(ArcsApp.class.getResource(guiPath));
+		FXMLLoader fxmlLoader = new FXMLLoader(OrthyApp.class.getResource(guiPath));
 
 		Parent root = new Pane();
 		fxmlLoader.setRoot(root);
