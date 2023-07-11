@@ -1,6 +1,5 @@
 package com.example.arcs.essentials;
 
-import com.example.arcs.util.OrthyArc;
 import javafx.geometry.Point2D;
 
 import java.text.DecimalFormat;

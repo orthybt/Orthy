@@ -1,6 +1,5 @@
 package com.example.arcs.essentials;
 
-import com.example.arcs.util.OrthyArc;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
@@ -82,7 +81,7 @@ public class ArcHandler {
 	 * @param event
 	 * @param drawingPane
 	 */
-	public void handleMouseClick(MouseEvent event, Pane drawingPane){
+	public void selectPoints(MouseEvent event, Pane drawingPane){
 		//create a tempPoint from the mouse click event
 		Point2D tempPoint = new Point2D(event.getX(), event.getY());
 		//add this point to orthyArc point list
@@ -174,66 +173,22 @@ public class ArcHandler {
 			}
 		});
 	}
-	//	public void selectArc(MouseEvent event) {
-//		Arc arc = tempArc.getArc();
-//		// Highlight the arc when selected
-//		arc.setStroke(Color.RED);
-//		isSelected = true;
-//
-//		// Deselect the arc when clicked again
-//		arc.setOnMouseClicked(e -> {
-//			if(isSelected) {
-//				// Reset color or other properties here
-//				arc.setStroke(Color.ALICEBLUE);
-//				isSelected = false;
-//			} else {
-//				selectArc(e);
-//			}
-//		});
-//	}
-//	public void makeArcDraggable() {
-//		Arc arc = orthyArc.getArc();
-//		final Delta dragDelta = new Delta();
-//
-//		arc.setOnMousePressed(mouseEvent -> {
-//			// record a delta distance for the drag and drop operation.
-//			dragDelta.x = arc.getCenterX() - mouseEvent.getX();
-//			dragDelta.y = arc.getCenterY() - mouseEvent.getY();
-//			arc.getScene().setCursor(Cursor.MOVE);
-//		});
-//
-//		arc.setOnMouseReleased(mouseEvent -> {
-//			arc.getScene().setCursor(Cursor.HAND);
-//		});
-//
-//		arc.setOnMouseDragged(mouseEvent -> {
-//			double newX = mouseEvent.getX() + dragDelta.x;
-//			if (newX > 0 && newX < arc.getScene().getWidth()) {
-//				arc.setCenterX(newX);
-//			}
-//			double newY = mouseEvent.getY() + dragDelta.y;
-//			if (newY > 0 && newY < arc.getScene().getHeight()) {
-//				arc.setCenterY(newY);
-//			}
-//		});
-//
-//		arc.setOnMouseEntered(mouseEvent -> {
-//			if (!mouseEvent.isPrimaryButtonDown()) {
-//				arc.getScene().setCursor(Cursor.HAND);
-//			}
-//		});
-//
-//		arc.setOnMouseExited(mouseEvent -> {
-//			if (!mouseEvent.isPrimaryButtonDown()) {
-//				arc.getScene().setCursor(Cursor.DEFAULT);
-//			}
-//		});
-//	}
+	//Arc resizing methods
 	//DECORATOR METHODS
 	private void decorateArc(int strokeWidth, Color strokeColor, Color fill){
 		orthyArc.getArc().setStrokeWidth(strokeWidth);
 		orthyArc.getArc().setStroke(strokeColor);
 		orthyArc.getArc().setFill(fill);
+	}
+	//HELPER METHODS
+	private boolean isArcInitiated(){
+		if(orthyArc.getArcPoints().size() == 0){
+			return false;
+		}
+		if (orthyArc.getArcPoints().size() == 1){
+			return false;
+		}
+		return true;
 	}
 	//GETTERS AND SETTERS
 	public OrthyArc getOrthyArc() {
@@ -242,11 +197,9 @@ public class ArcHandler {
 	public void setOrthyArc(OrthyArc orthyArc) {
 		this.orthyArc = orthyArc;
 	}
-
 	public OrthyArc getTempArc() {
 		return tempArc;
 	}
-
 	public void setTempArc(OrthyArc tempArc) {
 		this.tempArc = tempArc;
 	}

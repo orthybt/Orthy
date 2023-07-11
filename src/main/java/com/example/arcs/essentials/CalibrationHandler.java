@@ -13,6 +13,8 @@ import java.util.List;
 /**
  * You can access the calibration value from this class
  * It also handles the calibration process
+ * Every object that needs the calibration value, meaning how many pixels
+ * are in a 1mm distance, will have to ask this class for it.
  */
 public class CalibrationHandler {
 	/**
@@ -34,9 +36,7 @@ public class CalibrationHandler {
 	public void calibrate(){
 		Point2D p1 = calibrationPoints.get(0);
 		Point2D p2 = calibrationPoints.get(1);
-		calibratedValue = OrthyMath.calibrate(p1, p2);
-		TempObjects.getInstance().setCalibrationValue_1MM(calibratedValue);
-		Printer.printDouble(calibratedValue, "1MM equals ");
+		this.calibratedValue = OrthyMath.calibrate(p1, p2);
 	}
 	/**
 	 * Creates a point from the mouse event and draws it on the drawingPane
@@ -68,8 +68,19 @@ public class CalibrationHandler {
 	/**
 	 * Returns the state of the calibration initialization
 	 */
-	public boolean isCalibrated(){
-		return calibratedValue != null;
+	public boolean isCalibrationInitialized(){
+		boolean isCalibrationPointsInitialized;
+		//check if the calibrationPoints list is empty
+		if(calibrationPoints.isEmpty()){
+			isCalibrationPointsInitialized = false;
+		}
+		if (calibrationPoints.size() == 1){
+			isCalibrationPointsInitialized = false;
+		}
+		else {
+			isCalibrationPointsInitialized = true;
+		}
+		return isCalibrationPointsInitialized;
 	}
 	/**
 	 * Getters and setters

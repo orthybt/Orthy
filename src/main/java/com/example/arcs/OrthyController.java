@@ -15,6 +15,9 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
 
 public class OrthyController {
 	/**
@@ -80,7 +83,7 @@ public class OrthyController {
 		 * Initialize button handlers
 		 */
 		calibrateButtonHandler = new CalibrateButtonHandler(lineHandler, drawingPane);
-		drawLineButtonHandler = new DrawLineButtonHandler(lineHandler, drawingPane);
+		drawLineButtonHandler = new DrawLineButtonHandler(lineHandler, drawingPane, textArea);
 		drawArcButtonHandler = new DrawArcButtonHandler(arcHandler, drawingPane);
 		dragArcButtonHandler = new DragArcButtonHandler(arcHandler, drawingPane);
 		rotateArcButtonHandler = new RotateArcButtonHandler(arcHandler, drawingPane);
@@ -115,7 +118,6 @@ public class OrthyController {
 			stackPane.getChildren().add(1, drawingPane);
 		}
 	}
-
 	@FXML
 	private void loadImage() {
 		FileChooser fileChooser = new FileChooser();
@@ -135,7 +137,6 @@ public class OrthyController {
 			imageView.setImage(image);
 		}
 	}
-
 	@FXML
 	private void calibrate() {
 		//remove the previous mouse event handlers from the drawingPane
@@ -143,12 +144,10 @@ public class OrthyController {
 		// Set the calibrateButtonHandler on the drawingPane
 		drawingPane.setOnMouseClicked(this::handleCalibrateButton);
 	}
-
 	@FXML
 	private void resetCalibration() {
 		handleResetCalibrationButton();
 	}
-
 	@FXML
 	private void drawLine() {
 		//remove the previous mouse event handlers from the drawingPane
@@ -156,12 +155,10 @@ public class OrthyController {
 		// Set the drawLineButtonHandler on the drawingPane
 		drawingPane.setOnMouseClicked(this::handleDrawLineButton);
 	}
-
 	@FXML
 	private void drawArc() {
 		drawingPane.setOnMouseClicked(this::handleDrawArcButton);
 	}
-
 	@FXML
 	private void dragArc() {
 		//remove the previous mouse event handlers from the drawingPane
@@ -169,89 +166,108 @@ public class OrthyController {
 		// Set the dragArcButtonHandler on the drawingPane
 		drawingPane.setOnMouseClicked(this::handleDragArcButton);
 	}
-
 	@FXML
 	private void rotateArc() {
 		drawingPane.setOnMouseClicked(this::handleRotateArcButton);
 	}
-
 	@FXML
 	private void increaseArcWidth() {
 		handleIncreaseWidthButton();
 	}
-
 	@FXML
 	private void decreaseArcWidth() {
 		handleDecreaseWidthButton();
 	}
-
 	@FXML
 	private void increaseArcHeight() {
 		handleIncreaseHeightButton();
 	}
-
 	@FXML
 	private void decreaseArcHeight() {
 		handleDecreaseHeightButton();
 	}
-
-	//Method initialization
+	/**
+	 * Calibration Handlers
+	 */
 	private void handleCalibrateButton(MouseEvent event) {
 		calibrateButtonHandler.handle(event);
-		if (lineHandler.isCalibrationInitialized()) {
-			textArea.appendText("Calibration points set\n");
-			textArea.appendText("Calibration succesfull: \n");
-		}
 	}
-
 	private void handleResetCalibrationButton() {
 		calibrateButtonHandler.resetCalibration();
 		textArea.appendText("Calibration points reset\n");
 	}
-
+	/**
+	 * Line Handlers
+	 */
+	@FXML
 	private void handleDrawLineButton(MouseEvent event) {
 		if (!lineHandler.isLineInitialized()) {
 			lineHandler.selectPoint(event, drawingPane);
 		}
 		if (lineHandler.isLineInitialized()) {
-			lineHandler.createLine();
-			lineHandler.drawLine(drawingPane);
-			// append the length of the line to the TextArea
-			double length = lineHandler.getLine().getLineLengthMM(); // assuming getLengthOfLine()
-			// returns the length of the line
-			textArea.appendText(String.format("Line length: %.1f%n", length));
-			lineHandler.resetLine();
+			try {
+				lineHandler.createLine();
+				lineHandler.drawLine(drawingPane);
+				double length = lineHandler.getLine().getLineLengthMM();
+
+				// Display line length in the TextArea
+				textArea.appendText(String.format("Line length: %.1f mm%n", length));
+
+				lineHandler.resetLine();
+			} catch (Exception e) {
+				// Exception occurred, show an error message
+				Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+				errorAlert.setTitle("Error");
+				errorAlert.setHeaderText("Measurement Error");
+				errorAlert.setContentText("An error occurred during measurement.\n\n" +
+						"Do you want to continue drawing without measurements, or calibrate first?");
+				ButtonType continueButton = new ButtonType("Continue Drawing");
+				ButtonType calibrateButton = new ButtonType("Calibrate");
+
+				errorAlert.getButtonTypes().setAll(continueButton, calibrateButton);
+				errorAlert.showAndWait().ifPresent(buttonType -> {
+					if (buttonType == continueButton) {
+						// User chose to continue drawing without measurements
+						lineHandler.resetLine();
+					} else if (buttonType == calibrateButton) {
+						// User chose to calibrate, reset the line and clear the drawingPane
+						lineHandler.resetLine();
+						drawingPane.getChildren().clear();
+						calibrate();
+						errorAlert.close(); // Close the error alert after successful calibration
+					}
+				});
+			}
 		}
 	}
-
+	/**
+	 * Arc Handlers
+	 */
 	private void handleDrawArcButton(MouseEvent event) {
 		drawArcButtonHandler.handle(event);
 	}
-
 	private void handleDragArcButton(MouseEvent event) {
 		dragArcButtonHandler.handle(event);
 	}
-
 	private void handleRotateArcButton(MouseEvent event) {
 		rotateArcButtonHandler.handle(event);
 	}
-
 	private void handleIncreaseWidthButton() {
 		arcHandler.getTempArc().modifyRadiusX(5);
 	}
-
 	private void handleDecreaseWidthButton() {
 		arcHandler.getTempArc().modifyRadiusX(-5);
 	}
-
 	private void handleIncreaseHeightButton() {
 		arcHandler.getTempArc().modifyRadiusY(5);
 	}
-
 	private void handleDecreaseHeightButton() {
 		arcHandler.getTempArc().modifyRadiusY(-5);
 	}
-
+	/**
+	 * Clear Button Handler
+	 */
+	// TODO: 7/12/2023 escape key to clear the drawingPane
 	private void handleClearButton() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Dialog");

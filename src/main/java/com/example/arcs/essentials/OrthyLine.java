@@ -127,15 +127,12 @@ public class OrthyLine {
 	public void setyInterceptPerpendicular(Double yInterceptPerpendicular) {
 		this.yInterceptPerpendicular = yInterceptPerpendicular;
 	}
-
 	public Double getValueOf_1MM_InPixels() {
 		return valueOf_1MM_InPixels;
 	}
-
 	public void setValueOf_1MM_InPixels(Double valueOf_1MM_InPixels) {
 		this.valueOf_1MM_InPixels = valueOf_1MM_InPixels;
 	}
-
 	/**
 	 * toString method
 	 */

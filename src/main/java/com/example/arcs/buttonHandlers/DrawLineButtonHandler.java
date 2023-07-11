@@ -2,29 +2,21 @@ package com.example.arcs.buttonHandlers;
 
 import com.example.arcs.essentials.LineHandler;
 import javafx.event.EventHandler;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 public class DrawLineButtonHandler implements EventHandler<MouseEvent> {
-	/**
-	 * This class is responsible for handling the precisionLine button click
-	 * event.
-	 */
 	private LineHandler lineHandler;
 	private Pane drawingPane;
-	/**
-	 * Constructor
-	 * @param lineHandler
-	 * @param drawingPane
-	 */
-	public DrawLineButtonHandler(LineHandler lineHandler, Pane drawingPane) {
+	private TextArea textArea;
+
+	public DrawLineButtonHandler(LineHandler lineHandler, Pane drawingPane, TextArea textArea) {
 		this.lineHandler = lineHandler;
 		this.drawingPane = drawingPane;
+		this.textArea = textArea;
 	}
-	/**
-	 * This method handles the calibrate button click event.
-	 * @param event the event which occurred
-	 */
+
 	@Override
 	public void handle(MouseEvent event) {
 		if (!lineHandler.isLineInitialized()) {
@@ -33,6 +25,8 @@ public class DrawLineButtonHandler implements EventHandler<MouseEvent> {
 		if (lineHandler.isLineInitialized()) {
 			lineHandler.createLine();
 			lineHandler.drawLine(drawingPane);
+			double length = lineHandler.getLine().getLineLengthMM();
+			textArea.appendText(String.format("Line length: %.1f%n", length));
 			lineHandler.resetLine();
 		}
 	}
