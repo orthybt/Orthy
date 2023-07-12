@@ -15,6 +15,10 @@ import java.util.List;
 // Handles the creation and manipulation of arcs
 public class ArcHandler {
 	/**
+	 * Cloud access
+	 */
+	private Cloud c = Cloud.getInstance();
+	/**
 	 * The main object
 	 */
 	private OrthyArc orthyArc;
@@ -56,7 +60,7 @@ public class ArcHandler {
 		/**
 		 * Here i reset the point array, so when i press the drawArc button,
 		 * the event handler that i have instantiated in my Controller class,
-		 * will not prove true to the isInit()
+		 * will not prove true to the isArcInitialized()
 		 */
 		orthyArc.resetArcPoints();
 		orthyArc.setArc(arcTemp);//this line overrides the old arc
@@ -181,14 +185,14 @@ public class ArcHandler {
 		orthyArc.getArc().setFill(fill);
 	}
 	//HELPER METHODS
-	private boolean isArcInitiated(){
-		if(orthyArc.getArcPoints().size() == 0){
-			return false;
+	public boolean isArcInitialized(){
+		boolean isInitialized = false;
+		if(orthyArc.getArcPoints().size() < 2){
+			isInitialized = false;
+		} else {
+			isInitialized = true;
 		}
-		if (orthyArc.getArcPoints().size() == 1){
-			return false;
-		}
-		return true;
+		return isInitialized;
 	}
 	//GETTERS AND SETTERS
 	public OrthyArc getOrthyArc() {

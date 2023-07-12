@@ -42,5 +42,6 @@ public class CalibrateButtonHandler implements EventHandler<MouseEvent> {
 	}
 	public void resetCalibration() {
 		calibrationHandler.resetCalibration();
+		textArea.setText("Calibration points are reseted");
 	}
 }

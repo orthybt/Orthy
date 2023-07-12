@@ -1,19 +1,19 @@
 package com.example.arcs.essentials;
 
-import com.example.arcs.essentials.OrthyMath;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;
 
-import java.util.List;
-
 public class OrthyLine {
+	/**
+	 * Cloud access
+	 */
+	private Cloud c = Cloud.getInstance();
 	/**
 	 * The main class variables
 	 */
 	private Point2D a, b, midPoint, perpendicularStart;
 	private Line line, perpendicularLine;
 	private Double slope, yIntercept, negativeSlope, yInterceptPerpendicular;
-	private Double valueOf_1MM_InPixels;
 	/**
 	 * Default constructor
 	 */
@@ -62,7 +62,7 @@ public class OrthyLine {
 		return a.distance(b);
 	}
 	public Double getLineLengthMM(){
-		return getLineLength()/valueOf_1MM_InPixels;
+		return getLineLength()/c.getCalibrationHandler().getCalibrationFactor();
 	}
 	/**
 	 * Getters and setters
@@ -126,12 +126,6 @@ public class OrthyLine {
 	}
 	public void setyInterceptPerpendicular(Double yInterceptPerpendicular) {
 		this.yInterceptPerpendicular = yInterceptPerpendicular;
-	}
-	public Double getValueOf_1MM_InPixels() {
-		return valueOf_1MM_InPixels;
-	}
-	public void setValueOf_1MM_InPixels(Double valueOf_1MM_InPixels) {
-		this.valueOf_1MM_InPixels = valueOf_1MM_InPixels;
 	}
 	/**
 	 * toString method

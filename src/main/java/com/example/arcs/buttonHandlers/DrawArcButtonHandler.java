@@ -31,24 +31,17 @@ public class DrawArcButtonHandler implements EventHandler<MouseEvent> {
 
 	@Override
 	public void handle(MouseEvent event) {
-		if (!arcHandler.getOrthyArc().isInit()) {
+		if (!arcHandler.isArcInitialized()) {
 			// Here is where I give the point to the orthyArc point list
 			// otherwise this condition will always be true
 			arcHandler.selectPoints(event, drawingPane);
 		}
 		// If the arc has 2 points and thus is defined, create the arc
-		if (arcHandler.getOrthyArc().isInit()) {
+		if (arcHandler.isArcInitialized()) {
 			arcHandler.createArc();
 			arcHandler.drawArc(drawingPane);
-
+			// Get the length of the arc
 			double length = arcHandler.getOrthyArc().getArcLengthMM();
-
-			// Draw the length of the arc on the drawing pane
-			Text lengthText = new Text(String.format("Arc length: %.1f mm", length));
-			lengthText.setX(arcHandler.getOrthyArc().getCenterX());
-			lengthText.setY(arcHandler.getOrthyArc().getCenterY());
-			drawingPane.getChildren().add(lengthText);
-
 			// Append the length of the arc to the TextArea
 			textArea.appendText(String.format("Arc length: %.1f mm%n", length));
 		}

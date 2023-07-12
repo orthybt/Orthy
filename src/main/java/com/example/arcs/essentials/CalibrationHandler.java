@@ -1,6 +1,5 @@
 package com.example.arcs.essentials;
 
-import com.example.arcs.memory.TempObjects;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -18,10 +17,14 @@ import java.util.List;
  */
 public class CalibrationHandler {
 	/**
+	 * Cloud access
+	 */
+	private Cloud c = Cloud.getInstance();
+	/**
 	 * The main object
 	 */
 	private List<Point2D> calibrationPoints;
-	private Double calibratedValue;
+	private Double calibrationFactor;
 	/**
 	 * Default constructor
 	 * Basically you create an empty object, and you decorate it
@@ -36,7 +39,7 @@ public class CalibrationHandler {
 	public void calibrate(){
 		Point2D p1 = calibrationPoints.get(0);
 		Point2D p2 = calibrationPoints.get(1);
-		this.calibratedValue = OrthyMath.calibrate(p1, p2);
+		this.calibrationFactor = OrthyMath.calibrate(p1, p2);
 	}
 	/**
 	 * Creates a point from the mouse event and draws it on the drawingPane
@@ -62,25 +65,14 @@ public class CalibrationHandler {
 	 */
 	public void resetCalibration() {
 		calibrationPoints.clear();
-		calibratedValue = null;
+		calibrationFactor = null;
 		Printer.print("Calibration reset is successful");
 	}
 	/**
 	 * Returns the state of the calibration initialization
 	 */
 	public boolean isCalibrationInitialized(){
-		boolean isCalibrationPointsInitialized;
-		//check if the calibrationPoints list is empty
-		if(calibrationPoints.isEmpty()){
-			isCalibrationPointsInitialized = false;
-		}
-		if (calibrationPoints.size() == 1){
-			isCalibrationPointsInitialized = false;
-		}
-		else {
-			isCalibrationPointsInitialized = true;
-		}
-		return isCalibrationPointsInitialized;
+		return calibrationPoints.size() == 2;
 	}
 	/**
 	 * Getters and setters
@@ -91,10 +83,10 @@ public class CalibrationHandler {
 	public void setCalibrationPoints(List<Point2D> calibrationPoints) {
 		this.calibrationPoints = calibrationPoints;
 	}
-	public Double getCalibratedValue() {
-		return calibratedValue;
+	public Double getCalibrationFactor() {
+		return calibrationFactor;
 	}
-	public void setCalibratedValue(Double calibratedValue) {
-		this.calibratedValue = calibratedValue;
+	public void setCalibrationFactor(Double calibrationFactor) {
+		this.calibrationFactor = calibrationFactor;
 	}
 }

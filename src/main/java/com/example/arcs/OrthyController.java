@@ -2,6 +2,7 @@ package com.example.arcs;
 
 import com.example.arcs.buttonHandlers.*;
 import com.example.arcs.essentials.CalibrationHandler;
+import com.example.arcs.essentials.Cloud;
 import com.example.arcs.essentials.LineHandler;
 import com.example.arcs.essentials.ArcHandler;
 import javafx.fxml.FXML;
@@ -21,11 +22,15 @@ import javafx.scene.control.TextArea;
 
 public class OrthyController {
 	/**
+	 * Cloud access
+	 */
+	private Cloud c = Cloud.getInstance();
+	/**
 	 * Handlers
 	 */
-	CalibrationHandler calibrationHandler = new CalibrationHandler();
-	ArcHandler arcHandler = new ArcHandler();
-	LineHandler lineHandler = new LineHandler();
+	CalibrationHandler calibrationHandler = c.getCalibrationHandler();
+	ArcHandler arcHandler = c.getArcHandler();
+	LineHandler lineHandler = c.getLineHandler();
 	/**
 	 * Button handlers
 	 */
@@ -82,9 +87,9 @@ public class OrthyController {
 		/**
 		 * Initialize button handlers
 		 */
-		calibrateButtonHandler = new CalibrateButtonHandler(lineHandler, drawingPane);
-		drawLineButtonHandler = new DrawLineButtonHandler(lineHandler, drawingPane, textArea);
-		drawArcButtonHandler = new DrawArcButtonHandler(arcHandler, drawingPane);
+		calibrateButtonHandler = new CalibrateButtonHandler(calibrationHandler, drawingPane, textArea);
+		drawLineButtonHandler = new DrawLineButtonHandler(calibrationHandler, lineHandler, drawingPane, textArea);
+		drawArcButtonHandler = new DrawArcButtonHandler(arcHandler, drawingPane, textArea);
 		dragArcButtonHandler = new DragArcButtonHandler(arcHandler, drawingPane);
 		rotateArcButtonHandler = new RotateArcButtonHandler(arcHandler, drawingPane);
 		/**
@@ -194,51 +199,12 @@ public class OrthyController {
 	}
 	private void handleResetCalibrationButton() {
 		calibrateButtonHandler.resetCalibration();
-		textArea.appendText("Calibration points reset\n");
 	}
 	/**
 	 * Line Handlers
 	 */
-	@FXML
 	private void handleDrawLineButton(MouseEvent event) {
-		if (!lineHandler.isLineInitialized()) {
-			lineHandler.selectPoint(event, drawingPane);
-		}
-		if (lineHandler.isLineInitialized()) {
-			try {
-				lineHandler.createLine();
-				lineHandler.drawLine(drawingPane);
-				double length = lineHandler.getLine().getLineLengthMM();
-
-				// Display line length in the TextArea
-				textArea.appendText(String.format("Line length: %.1f mm%n", length));
-
-				lineHandler.resetLine();
-			} catch (Exception e) {
-				// Exception occurred, show an error message
-				Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-				errorAlert.setTitle("Error");
-				errorAlert.setHeaderText("Measurement Error");
-				errorAlert.setContentText("An error occurred during measurement.\n\n" +
-						"Do you want to continue drawing without measurements, or calibrate first?");
-				ButtonType continueButton = new ButtonType("Continue Drawing");
-				ButtonType calibrateButton = new ButtonType("Calibrate");
-
-				errorAlert.getButtonTypes().setAll(continueButton, calibrateButton);
-				errorAlert.showAndWait().ifPresent(buttonType -> {
-					if (buttonType == continueButton) {
-						// User chose to continue drawing without measurements
-						lineHandler.resetLine();
-					} else if (buttonType == calibrateButton) {
-						// User chose to calibrate, reset the line and clear the drawingPane
-						lineHandler.resetLine();
-						drawingPane.getChildren().clear();
-						calibrate();
-						errorAlert.close(); // Close the error alert after successful calibration
-					}
-				});
-			}
-		}
+		drawLineButtonHandler.handle(event);
 	}
 	/**
 	 * Arc Handlers

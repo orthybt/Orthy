@@ -15,6 +15,10 @@ import java.util.List;
  */
 public class LineHandler {
 	/**
+	 * Cloud access
+	 */
+	private Cloud c = Cloud.getInstance();
+	/**
 	 * The main object
 	 */
 	private OrthyLine line;
@@ -22,7 +26,6 @@ public class LineHandler {
 	 * Usefull objects
 	 */
 	private List<Point2D> linePoints;
-	private List<Point2D> calibrationPoints;
 	/**
 	 * Default constructor
 	 * Basically you create an empty object, and you decorate it
@@ -31,18 +34,6 @@ public class LineHandler {
 	public LineHandler(){
 		this.line = new OrthyLine();
 		this.linePoints = new ArrayList<>();
-		this.calibrationPoints = new ArrayList<>();
-	}
-	/**
-	 * Initialization of the calibration points
-	 */
-	public void selectCalibrationPoint(MouseEvent event, Pane drawingPane){
-		//create a tempPoint from the mouse click event
-		Point2D tempPoint = new Point2D(event.getX(), event.getY());
-		//add this point to linePoints list
-		calibrationPoints.add(tempPoint);
-		//draw the the point on the drawingPane
-		drawPoint(tempPoint, drawingPane);// TODO: 26/06/2023 Create a pen class
 	}
 	/**
 	 * This is where the magic happens, initialization of the linePoints
@@ -67,9 +58,6 @@ public class LineHandler {
 		Point2D p1 = linePoints.get(0);
 		Point2D p2 = linePoints.get(1);
 		line = new OrthyLine(p1, p2);
-		if (isCalibrationInitialized()) {
-			line.setValueOf_1MM_InPixels(OrthyMath.calibrate(calibrationPoints));
-		}
 	}
 	public void drawLine(Pane drawingPane){
 		decorateLine(1, Color.BLACK);
@@ -82,14 +70,11 @@ public class LineHandler {
 		return line.getLineLengthMM();
 	}
 	/**
-	 * Reset line and calibration
+	 * Reset line
 	 */
 	public void resetLine(){
 		linePoints.clear();
 		line = new OrthyLine();
-	}
-	public void resetCalibration(){
-		calibrationPoints.clear();
 	}
 	/**
 	 * Line decoration
@@ -103,9 +88,6 @@ public class LineHandler {
 	 */
 	public boolean isLineInitialized(){
 		return linePoints.size() == 2;
-	}
-	public boolean isCalibrationInitialized(){
-		return calibrationPoints.size() == 2;
 	}
 	/**
 	 * Getters and setters
