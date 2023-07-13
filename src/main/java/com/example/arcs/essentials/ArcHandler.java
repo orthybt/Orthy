@@ -1,5 +1,8 @@
 package com.example.arcs.essentials;
 
+import com.example.arcs.cloud.Cloud;
+import com.example.arcs.recycleBin.Pen;
+import com.example.arcs.recycleBin.PointSelector;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
@@ -14,91 +17,21 @@ import java.util.List;
 
 // Handles the creation and manipulation of arcs
 public class ArcHandler {
-	/**
-	 * Cloud access
-	 */
-	private Cloud c = Cloud.getInstance();
-	/**
-	 * The main object
-	 */
 	private OrthyArc orthyArc;
-	/** The object used in dragging and rotating etc..*/
-	private OrthyArc tempArc;
-	/**
-	 * I might need them later on :)
-	 */
-	private List<Point2D> tempArcPoints;
-	/** records relative x and y co-ordinates.*/
+	private List<Point2D> arcPoints;
 	private class Delta { double x, y; }
 	private boolean isSelected = false;
-	/**
-	 * Default constructor
-	 * Basically you create an empty object, and you decorate it
-	 * later on
-	 */
 	public ArcHandler(){
 		//default OrthyArc created at a default constructor, can be modified and decorated
 		this.orthyArc = new OrthyArc();
-		this.tempArc = orthyArc;
-		tempArcPoints = new ArrayList<>();
-	}
-	/**
-	 * Arc creation
-	 * Here we just create the arc, other method will draw it
-	 * As a basic rule, Orthy objects should be created blank
-	 * and decorated per need
-	 */
-	public void createArc(){
-		/**
-		 * After selectPoint filled the array with two points, im saving
-		 * these points into two local variables, i use these points to
-		 * initialize the arc in OrthyArch.
-		 */
-		Point2D p1 = orthyArc.getP1();
-		Point2D p2 = orthyArc.getP2();
-		Arc arcTemp = ArcFactory.createArc(p1, p2);
-		/**
-		 * Here i reset the point array, so when i press the drawArc button,
-		 * the event handler that i have instantiated in my Controller class,
-		 * will not prove true to the isArcInitialized()
-		 */
-		orthyArc.resetArcPoints();
-		orthyArc.setArc(arcTemp);//this line overrides the old arc
-		/**
-		 * Here i copy the arc into the tempArc. The temp arc will be used
-		 * for manupulations, and it wont be reset because there is no call
-		 * to createArc() that contains the reset statements
-		 */
-		tempArc = orthyArc;
-		//decorate the arc // TODO: 26/06/2023 Create a decorator class/methods
-//		decorateArc(6, Color.BLACK,Color.BLACK);
-		decorateArc(3, Color.BLACK,null);
-
+		this.arcPoints = new ArrayList<>();
 	}
 	public void drawArc(Pane drawingPane){
 		drawingPane.getChildren().add(orthyArc.getArc());
 	}
-	/**
-	 * Creates a point from the mouse event(mouse clicked)
-	 * Adds the point to the OrthyArc point array
-	 * Draws the point on the drawingPane
-	 * @param event
-	 * @param drawingPane
-	 */
-	public void selectPoints(MouseEvent event, Pane drawingPane){
-		//create a tempPoint from the mouse click event
-		Point2D tempPoint = new Point2D(event.getX(), event.getY());
-		//add this point to orthyArc point list
-		orthyArc.getArcPoints().add(tempPoint);
-		//draw the the point on the drawingPane
-		drawPoint(tempPoint, drawingPane);// TODO: 26/06/2023 Create a pen class
+	public boolean isArcInitialized(){
+		return orthyArc.isArcInitialized();
 	}
-	// Draws a point at a given position on a drawingPane
-	public void drawPoint(Point2D p, Pane drawingPane){
-		Circle point = new Circle(p.getX(), p.getY(), 2, Color.BLACK);
-		drawingPane.getChildren().add(point);
-	}
-	//Arc dragging methods
 	public void selectArc(Arc arc) {
 		arc.setOnMouseClicked(e -> {
 			if(isSelected) {
@@ -177,34 +110,32 @@ public class ArcHandler {
 			}
 		});
 	}
-	//Arc resizing methods
-	//DECORATOR METHODS
 	private void decorateArc(int strokeWidth, Color strokeColor, Color fill){
 		orthyArc.getArc().setStrokeWidth(strokeWidth);
 		orthyArc.getArc().setStroke(strokeColor);
 		orthyArc.getArc().setFill(fill);
 	}
-	//HELPER METHODS
-	public boolean isArcInitialized(){
-		boolean isInitialized = false;
-		if(orthyArc.getArcPoints().size() < 2){
-			isInitialized = false;
-		} else {
-			isInitialized = true;
-		}
-		return isInitialized;
-	}
+
 	//GETTERS AND SETTERS
-	public OrthyArc getOrthyArc() {
-		return orthyArc;
-	}
 	public void setOrthyArc(OrthyArc orthyArc) {
 		this.orthyArc = orthyArc;
 	}
-	public OrthyArc getTempArc() {
-		return tempArc;
+	public OrthyArc getOrthyArc() {
+		return orthyArc;
 	}
-	public void setTempArc(OrthyArc tempArc) {
-		this.tempArc = tempArc;
+	public List<Point2D> getArcPoints() {
+		return arcPoints;
 	}
+	public void setArcPoints(List<Point2D> arcPoints) {
+		this.arcPoints = arcPoints;
+	}
+//	public void setOrthyArc(OrthyArc orthyArc) {
+//		this.orthyArc = orthyArc;
+//	}
+//	public OrthyArc getTempArc() {
+//		return tempArc;
+//	}
+//	public void setTempArc(OrthyArc tempArc) {
+//		this.tempArc = tempArc;
+//	}
 }

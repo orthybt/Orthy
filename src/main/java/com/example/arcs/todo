@@ -1,0 +1,35 @@
+TODO file where i write down all the things i want to do in the future.
+ -> Decipher your own code
+    -> Start with ArcHandler and OrthyArc
+    -> Currently i am tracing the execution flow of arcPoints
+
+draw on paper how each object in orthy arc is connected with arc handler
+    -> In the Controller class
+        -> drawArc -> handleDrawArcButton -> DrawArcButtonHandler.handle()
+            -> handle(MouseEvent event)
+                -> check if the arc is initialized
+                    -> if not
+                        -> arcHandler.selectPoints()
+                    -> if yes
+                        -> createArc()
+                        -> drawArc()
+                        -> stop here and make the arc show its length if the
+                           calibration is done, else just draw the arc.
+
+arcHandler.selectPoints(event, drawingPane)
+    -> The OrthyArc is initialized as a blank arc in the constructor of ArcHandler
+    -> The first point is set in the first call of selectPoints()
+        -> Direct call to OrthyArc.setStartPoint()
+    -> The second point is set in the second call of selectPoints()
+        -> Direct call to OrthyArc.setEndPoint()
+    -> After each point is set, that point is drawn on the drawingPane
+    -> After the second point is set, the arc is initialized with those two points
+    -> point selection just adds points to the list of arcPoints
+
+Make a point selector class that will select points. THe number of points is
+irelevant. The point selector will just select points from an event and add the
+to a tempList. And i will use this tempList to initialize the arc or any object
+of my choosing. THe select Points method will be removed from the arc handler
+as well as the draw point method
+
+Lets sum it all up

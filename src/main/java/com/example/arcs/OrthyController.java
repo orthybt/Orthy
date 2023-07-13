@@ -2,9 +2,10 @@ package com.example.arcs;
 
 import com.example.arcs.buttonHandlers.*;
 import com.example.arcs.essentials.CalibrationHandler;
-import com.example.arcs.essentials.Cloud;
+import com.example.arcs.cloud.Cloud;
 import com.example.arcs.essentials.LineHandler;
 import com.example.arcs.essentials.ArcHandler;
+import com.example.arcs.recycleBin.PointHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -25,12 +26,7 @@ public class OrthyController {
 	 * Cloud access
 	 */
 	private Cloud c = Cloud.getInstance();
-	/**
-	 * Handlers
-	 */
-	CalibrationHandler calibrationHandler = c.getCalibrationHandler();
-	ArcHandler arcHandler = c.getArcHandler();
-	LineHandler lineHandler = c.getLineHandler();
+
 	/**
 	 * Button handlers
 	 */
@@ -39,6 +35,7 @@ public class OrthyController {
 	DrawArcButtonHandler drawArcButtonHandler;
 	DragArcButtonHandler dragArcButtonHandler;
 	RotateArcButtonHandler rotateArcButtonHandler;
+
 	/**
 	 * Gui elements
 	 */
@@ -84,14 +81,17 @@ public class OrthyController {
 	@FXML
 	private void initialize() {
 		initStackPane();
+
 		/**
 		 * Initialize button handlers
 		 */
-		calibrateButtonHandler = new CalibrateButtonHandler(calibrationHandler, drawingPane, textArea);
-		drawLineButtonHandler = new DrawLineButtonHandler(calibrationHandler, lineHandler, drawingPane, textArea);
-		drawArcButtonHandler = new DrawArcButtonHandler(arcHandler, drawingPane, textArea);
-		dragArcButtonHandler = new DragArcButtonHandler(arcHandler, drawingPane);
-		rotateArcButtonHandler = new RotateArcButtonHandler(arcHandler, drawingPane);
+		calibrateButtonHandler = new CalibrateButtonHandler(c.getCalibrationHandler(), drawingPane,
+				textArea);
+		drawLineButtonHandler =
+				new DrawLineButtonHandler( drawingPane, textArea);
+		drawArcButtonHandler = new DrawArcButtonHandler( drawingPane, textArea);
+		dragArcButtonHandler = new DragArcButtonHandler(c.getArcHandler(), drawingPane);
+		rotateArcButtonHandler = new RotateArcButtonHandler(c.getArcHandler(), drawingPane);
 		/**
 		 * Assign functions to each button
 		 */
@@ -219,16 +219,16 @@ public class OrthyController {
 		rotateArcButtonHandler.handle(event);
 	}
 	private void handleIncreaseWidthButton() {
-		arcHandler.getTempArc().modifyRadiusX(5);
+		c.getArcHandler().getOrthyArc().modifyRadiusX(5);
 	}
 	private void handleDecreaseWidthButton() {
-		arcHandler.getTempArc().modifyRadiusX(-5);
+		c.getArcHandler().getOrthyArc().modifyRadiusX(-5);
 	}
 	private void handleIncreaseHeightButton() {
-		arcHandler.getTempArc().modifyRadiusY(5);
+		c.getArcHandler().getOrthyArc().modifyRadiusY(5);
 	}
 	private void handleDecreaseHeightButton() {
-		arcHandler.getTempArc().modifyRadiusY(-5);
+		c.getArcHandler().getOrthyArc().modifyRadiusY(-5);
 	}
 	/**
 	 * Clear Button Handler
