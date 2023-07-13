@@ -14,10 +14,10 @@ public class MovementCalculator {
 	}
 
 	public static void main(String[] args) {
-		double baseArea = area(200, 50);
+		double baseArea = area(0.2, 0.05);
 		System.out.println("The area of the base triangle is: " + decimalFormat.format(baseArea));
 
-		double newBase = 100;
+		double newBase = 0.1;
 		double newHeight = newHeight(newBase, baseArea);
 		System.out.println("The height for the new base " + decimalFormat.format(newBase) +
 				" to maintain the area is: " + decimalFormat.format(newHeight));
