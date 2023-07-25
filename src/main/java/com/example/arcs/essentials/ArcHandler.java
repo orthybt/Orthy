@@ -27,7 +27,10 @@ public class ArcHandler {
 		this.arcPoints = new ArrayList<>();
 	}
 	public void drawArc(Pane drawingPane){
+		decorateArc(2, Color.BLACK, Color.TRANSPARENT);
 		drawingPane.getChildren().add(orthyArc.getArc());
+		resetArc();
+
 	}
 	public boolean isArcInitialized(){
 		return orthyArc.isArcInitialized();
@@ -114,6 +117,9 @@ public class ArcHandler {
 		orthyArc.getArc().setStrokeWidth(strokeWidth);
 		orthyArc.getArc().setStroke(strokeColor);
 		orthyArc.getArc().setFill(fill);
+	}
+	public void resetArc(){
+		this.orthyArc.resetArcPoints();
 	}
 
 	//GETTERS AND SETTERS

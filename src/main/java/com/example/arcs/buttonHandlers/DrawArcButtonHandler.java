@@ -28,11 +28,13 @@ public class DrawArcButtonHandler implements EventHandler<MouseEvent> {
 
 	@Override
 	public void handle(MouseEvent event) {
+
 		if (!Cloud.getInstance().getArcHandler().isArcInitialized()) {
 			Cloud.getInstance().getPointHandler().selectArcPoints(event, drawingPane);
 		}
 		if (Cloud.getInstance().getArcHandler().isArcInitialized()) {
 			Cloud.getInstance().getArcHandler().drawArc(drawingPane);
+			Cloud.getInstance().getArcHandler().resetArc();
 
 //			double length = arcHandler.getOrthyArc().getArcLength();
 //			double lenMM = length/c.getCalibrationHandler().getCalibrationFactor();
