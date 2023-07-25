@@ -5,6 +5,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Arc Factory class
  * Creates different types of arcs, mainly used for orthodontic purposes, thus
@@ -42,4 +45,16 @@ public class ArcFactory {
 		return arc;
 	}
 
+	public static OrthyArc createOrthyArc(Point2D startPoint, Point2D endPoint){
+		OrthyArc orthyArc = new OrthyArc();
+		List<Point2D> arcPoints = new ArrayList<>();
+		arcPoints.add(startPoint);
+		arcPoints.add(endPoint);
+		orthyArc.setStartPoint(startPoint);
+		orthyArc.setEndPoint(endPoint);
+		orthyArc.setArcPoints(arcPoints);
+		orthyArc.setArc(createArc(startPoint, endPoint));
+		orthyArc.setArcInitialized(true);
+		return orthyArc;
+	}
 }

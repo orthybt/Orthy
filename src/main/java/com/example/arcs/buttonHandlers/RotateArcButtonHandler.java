@@ -17,7 +17,7 @@ public class RotateArcButtonHandler implements EventHandler<MouseEvent> {
 
 	@Override
 	public void handle(MouseEvent event) {
-		arcHandler.selectArc(arcHandler.getTempArc().getArc());
-		arcHandler.rotateArc(arcHandler.getTempArc().getArc());
+		arcHandler.selectArc(arcHandler.getOrthyArc().getArc());
+		arcHandler.rotateArc(arcHandler.getOrthyArc().getArc());
 	}
 }

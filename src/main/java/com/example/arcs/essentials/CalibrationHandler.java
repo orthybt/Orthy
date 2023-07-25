@@ -1,5 +1,6 @@
 package com.example.arcs.essentials;
 
+import com.example.arcs.cloud.Cloud;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -17,14 +18,11 @@ import java.util.List;
  */
 public class CalibrationHandler {
 	/**
-	 * Cloud access
-	 */
-	private Cloud c = Cloud.getInstance();
-	/**
 	 * The main object
 	 */
 	private List<Point2D> calibrationPoints;
 	private Double calibrationFactor;
+	private boolean isCalibrationInitialized;
 	/**
 	 * Default constructor
 	 * Basically you create an empty object, and you decorate it
@@ -32,6 +30,8 @@ public class CalibrationHandler {
 	 */
 	public CalibrationHandler(){
 		this.calibrationPoints = new ArrayList<>();
+		this.calibrationFactor = null;
+		this.isCalibrationInitialized = false;
 	}
 	/**
 	 * The main method of this class
@@ -42,38 +42,24 @@ public class CalibrationHandler {
 		this.calibrationFactor = OrthyMath.calibrate(p1, p2);
 	}
 	/**
-	 * Creates a point from the mouse event and draws it on the drawingPane
-	 * Adds the point to the point list
-	 * Draws the point on the drawingPane
-	 * @param event
-	 * @param drawingPane
-	 */
-	public void selectPoint(MouseEvent event, Pane drawingPane){
-		//create a tempPoint from the mouse click event
-		Point2D tempPoint = new Point2D(event.getX(), event.getY());
-		//add this point to calibration point list
-		calibrationPoints.add(tempPoint);
-		//draw the the point on the drawingPane
-		drawPoint(tempPoint, drawingPane);// TODO: 26/06/2023 Create a pen class
-	}
-	public void drawPoint(Point2D p, Pane drawingPane){
-		Circle point = new Circle(p.getX(), p.getY(), 2, Color.BLACK);
-		drawingPane.getChildren().add(point);
-	}
-	/**
 	 * Resets the calibration
 	 */
 	public void resetCalibration() {
 		calibrationPoints.clear();
 		calibrationFactor = null;
-		Printer.print("Calibration reset is successful");
+		isCalibrationInitialized = false;
 	}
 	/**
 	 * Returns the state of the calibration initialization
 	 */
 	public boolean isCalibrationInitialized(){
-		return calibrationPoints.size() == 2;
+		return isCalibrationInitialized;
 	}
+
+	public void setCalibrationInitialized(boolean calibrationInitialized) {
+		isCalibrationInitialized = calibrationInitialized;
+	}
+
 	/**
 	 * Getters and setters
  	 */

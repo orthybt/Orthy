@@ -1,5 +1,6 @@
 package com.example.arcs;
 
+import com.example.arcs.cloud.Cloud;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +12,7 @@ import java.io.IOException;
 
 public class OrthyApp extends Application {
 	private String guiPath = "Orthy.fxml";
+	private Cloud c = Cloud.getInstance();
 
 	@Override
 	public void start(Stage stage) throws IOException {

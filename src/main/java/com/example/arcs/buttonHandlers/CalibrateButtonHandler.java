@@ -1,5 +1,6 @@
 package com.example.arcs.buttonHandlers;
 
+import com.example.arcs.cloud.Cloud;
 import com.example.arcs.essentials.CalibrationHandler;
 import com.example.arcs.essentials.LineHandler;
 import com.example.arcs.essentials.Printer;
@@ -33,7 +34,7 @@ public class CalibrateButtonHandler implements EventHandler<MouseEvent> {
 	@Override
 	public void handle(MouseEvent event) {
 		if (!calibrationHandler.isCalibrationInitialized()) {
-			calibrationHandler.selectPoint(event, drawingPane);
+			Cloud.getInstance().getPointHandler().selectCalibratePoints(event, drawingPane);
 		}
 		if (calibrationHandler.isCalibrationInitialized()) {
 			calibrationHandler.calibrate();

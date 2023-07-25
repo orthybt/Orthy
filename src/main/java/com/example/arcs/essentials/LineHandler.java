@@ -1,5 +1,6 @@
 package com.example.arcs.essentials;
 
+import com.example.arcs.cloud.Cloud;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -15,10 +16,6 @@ import java.util.List;
  */
 public class LineHandler {
 	/**
-	 * Cloud access
-	 */
-	private Cloud c = Cloud.getInstance();
-	/**
 	 * The main object
 	 */
 	private OrthyLine line;
@@ -26,6 +23,7 @@ public class LineHandler {
 	 * Usefull objects
 	 */
 	private List<Point2D> linePoints;
+	private boolean isLineInitialized;
 	/**
 	 * Default constructor
 	 * Basically you create an empty object, and you decorate it
@@ -34,47 +32,27 @@ public class LineHandler {
 	public LineHandler(){
 		this.line = new OrthyLine();
 		this.linePoints = new ArrayList<>();
-	}
-	/**
-	 * This is where the magic happens, initialization of the linePoints
-	 * And thus the OrthyLine object
-	 */
-	public void selectPoint(MouseEvent event, Pane drawingPane){
-		//create a tempPoint from the mouse click event
-		Point2D tempPoint = new Point2D(event.getX(), event.getY());
-		//add this point to linePoints list
-		linePoints.add(tempPoint);
-		//draw the the point on the drawingPane
-		drawPoint(tempPoint, drawingPane);// TODO: 26/06/2023 Create a pen class
-	}
-	public void drawPoint(Point2D p, Pane drawingPane){
-		Circle point = new Circle(p.getX(), p.getY(), 2, Color.BLACK);
-		drawingPane.getChildren().add(point);
-	}
-	/**
-	 * Line Creation
-	 */
-	public void createLine(){
-		Point2D p1 = linePoints.get(0);
-		Point2D p2 = linePoints.get(1);
-		line = new OrthyLine(p1, p2);
+		this.isLineInitialized = false;
 	}
 	public void drawLine(Pane drawingPane){
 		decorateLine(1, Color.BLACK);
 		drawingPane.getChildren().add(line.getLine());
+		resetLine();
 	}
 	/**
 	 * Line measurement
 	 */
 	public Double measureLine(){
-		return line.getLineLengthMM();
+		return line.getLineLength()/ Cloud.getInstance().getCalibrationHandler().getCalibrationFactor();
 	}
 	/**
 	 * Reset line
 	 */
 	public void resetLine(){
 		linePoints.clear();
+		isLineInitialized = false;
 		line = new OrthyLine();
+
 	}
 	/**
 	 * Line decoration
@@ -87,7 +65,7 @@ public class LineHandler {
 	 * Returns the state of the line initialization
 	 */
 	public boolean isLineInitialized(){
-		return linePoints.size() == 2;
+		return line.isLineInitialized();
 	}
 	/**
 	 * Getters and setters
@@ -95,7 +73,7 @@ public class LineHandler {
 	public OrthyLine getLine() {
 		return line;
 	}
-	public void setLine(OrthyLine line) {
+	public void setOrthyLine(OrthyLine line) {
 		this.line = line;
 	}
 	public List<Point2D> getLinePoints() {

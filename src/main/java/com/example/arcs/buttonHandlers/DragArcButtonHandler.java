@@ -17,7 +17,7 @@ public class DragArcButtonHandler implements EventHandler<MouseEvent> {
 
 	@Override
 	public void handle(MouseEvent event) {
-		arcHandler.selectArc(arcHandler.getTempArc().getArc());
-		arcHandler.makeArcDraggable(arcHandler.getTempArc().getArc());
+		arcHandler.selectArc(arcHandler.getOrthyArc().getArc());
+		arcHandler.makeArcDraggable(arcHandler.getOrthyArc().getArc());
 	}
 }

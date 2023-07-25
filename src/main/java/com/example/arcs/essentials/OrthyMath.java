@@ -122,7 +122,7 @@ public class OrthyMath{
 		Line translateLine = new Line(line.getStartX(), line.getStartY(), line.getEndX(), line.getEndY());
 
 		// Create a perpendicular line at point B of the translated line
-		Line perLine = LineCreator.perpendicularLineAtB(translateLine);
+		Line perLine = LineFactory.perpendicularLineAtB(translateLine);
 
 		// Find the intersection point between the original line and the perpendicular line
 		Point2D intersection = OrthyMath.findIntersection(line, perLine);
@@ -224,8 +224,8 @@ public class OrthyMath{
 		Line line = new Line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 
 		// Create perpendicular lines at point p1 and point p2 of the line
-		Line perP1 = LineCreator.perpendicularLineAtA(line);
-		Line perP2 = LineCreator.perpendicularLineAtB(line);
+		Line perP1 = LineFactory.perpendicularLineAtA(line);
+		Line perP2 = LineFactory.perpendicularLineAtB(line);
 
 		// Find the intersection point of the perpendicular lines
 		Point2D intersection = findIntersection(perP1, perP2);
