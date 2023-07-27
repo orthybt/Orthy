@@ -3,6 +3,7 @@ package com.example.arcs.buttonHandlers;
 import com.example.arcs.essentials.ArcHandler;
 import com.example.arcs.cloud.Cloud;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -34,8 +35,15 @@ public class DrawArcButtonHandler implements EventHandler<MouseEvent> {
 		}
 		if (Cloud.getInstance().getArcHandler().isArcInitialized()) {
 			Cloud.getInstance().getArcHandler().drawArc(drawingPane);
-			Cloud.getInstance().getArcHandler().resetArc();
-
+			//reset the orthyArc object in arc handler
+			//so that it can be used again
+			//
+			Point2D resetA = new Point2D(0, 0);
+			Point2D resetB = new Point2D(0, 0);
+			Cloud.getInstance().getArcHandler().getOrthyArc().setStartPoint(resetA);
+			Cloud.getInstance().getArcHandler().getOrthyArc().setEndPoint(resetB);
+			Cloud.getInstance().getArcHandler().getOrthyArc().setArcInitialized(false);
+			Cloud.getInstance().getPointHandler().getPointSelector().resetPointSelector();
 //			double length = arcHandler.getOrthyArc().getArcLength();
 //			double lenMM = length/c.getCalibrationHandler().getCalibrationFactor();
 //			textArea.appendText(String.format("Arc length: %.1f mm%n", lenMM));

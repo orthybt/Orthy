@@ -86,4 +86,8 @@ public class PointHandler{
 	public List<Point2D> getCalibratePoints(){
 		return pointSelector.getPoints();
 	}
+
+	public PointSelector getPointSelector() {
+		return pointSelector;
+	}
 }
