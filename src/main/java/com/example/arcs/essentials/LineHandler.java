@@ -38,10 +38,11 @@ public class LineHandler {
 	public void drawLine(Pane drawingPane){
 		decorateLine(1, Color.BLACK);
 		drawingPane.getChildren().add(line.getLine());
-		//Before reseting the line, we need to save the length
-		//This will be a temp workaround, since the line is being reset after
-		// the draw method is called
-		this.lineLengthTemp = measureLine();
+		//chech if calibration is initialized and calculate line length, if
+		// not, just draw the line
+		if(Cloud.getInstance().getCalibrationHandler().isCalibrationInitialized()){
+			lineLengthTemp = measureLine();
+		}
 		resetLine();
 	}
 	/**
