@@ -28,7 +28,9 @@ public class DrawLineButtonHandler implements EventHandler<MouseEvent> {
 			Cloud.getInstance().getLineHandler().drawLine(drawingPane);
 		}
 		if (Cloud.getInstance().getCalibrationHandler().isCalibrationInitialized()){
-			textArea.setText("Line length: " + Cloud.getInstance().getLineHandler().measureLine() + " mm");
+			double lineLength = Cloud.getInstance().getLineHandler().measureLine();
+			String lineLengthString = String.format("%.1f", lineLength);
+			textArea.setText("Line length: " + lineLengthString + " mm");
 		}
 	}
 }

@@ -24,6 +24,7 @@ public class LineHandler {
 	 */
 	private List<Point2D> linePoints;
 	private boolean isLineInitialized;
+	private double lineLengthTemp;
 	/**
 	 * Default constructor
 	 * Basically you create an empty object, and you decorate it
@@ -37,6 +38,10 @@ public class LineHandler {
 	public void drawLine(Pane drawingPane){
 		decorateLine(1, Color.BLACK);
 		drawingPane.getChildren().add(line.getLine());
+		//Before reseting the line, we need to save the length
+		//This will be a temp workaround, since the line is being reset after
+		// the draw method is called
+		this.lineLengthTemp = measureLine();
 		resetLine();
 	}
 	/**
@@ -81,5 +86,9 @@ public class LineHandler {
 	}
 	public void setLinePoints(List<Point2D> linePoints) {
 		this.linePoints = linePoints;
+	}
+
+	public double getLineLengthTemp() {
+		return lineLengthTemp;
 	}
 }

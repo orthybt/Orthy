@@ -128,7 +128,8 @@ public class OrthyController {
 		FileChooser fileChooser = new FileChooser();
 
 		// Set the initial directory
-		fileChooser.setInitialDirectory(new File("C:\\Users\\User\\Documents"));
+		fileChooser.setInitialDirectory(new File("C:\\Users\\User\\Desktop" +
+				"\\TempPatient"));
 
 		// Add file filters for images
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"), new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("BMP", "*.bmp"), new FileChooser.ExtensionFilter("GIF", "*.gif"));
