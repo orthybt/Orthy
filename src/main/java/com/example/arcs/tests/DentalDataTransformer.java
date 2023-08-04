@@ -32,7 +32,6 @@ public class DentalDataTransformer {
 
 		transformDentalData(inputFilePath, outputFilePath);
 	}
-
 	public static void transformDentalData(String inputFilePath, String outputFilePath) {
 		try (CSVReader reader = new CSVReader(new FileReader(inputFilePath));
 		     CSVWriter writer = new CSVWriter(new FileWriter(outputFilePath))) {

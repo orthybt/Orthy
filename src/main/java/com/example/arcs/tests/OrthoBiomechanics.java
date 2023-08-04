@@ -80,9 +80,9 @@ public class OrthoBiomechanics {
 
 		frame.add(blLabel);
 		frame.add(blField);
-		frame.add(mdLabel);
-		frame.add(mdField);
-		frame.add(calculateButton);
+		frame.add(mdLabel);     // Add the label
+		frame.add(mdField);     // Add the text field
+		frame.add(calculateButton);    // Add the button
 		frame.add(resultLabel);
 		frame.add(new JScrollPane(resultArea));
 
@@ -112,13 +112,10 @@ public class OrthoBiomechanics {
 		}
 		return BL;
 	}
-
 	private static double modifyMD(double BL, double MD, int steps) {
 		while (MD > 0 && !isValidStep(BL, MD, steps)) {
 			MD -= 0.01;  // decrease by 0.01mm increments
 		}
 		return MD;
 	}
-
-
 }
