@@ -18,8 +18,8 @@ public class BoltonAnalysis {
 
 	public void calculateTotalBolton( double maxSum, double mandSum){
 		totalRatio = (mandSum / maxSum) * 100;
-		maxTotalExcess = (maxSum - mandSum) / TOTAL_BOLTON_RATIO * 100;
-		mandTotalExcess = (mandSum - maxSum) / TOTAL_BOLTON_RATIO * 100;
+		maxTotalExcess = maxSum - (mandSum / TOTAL_BOLTON_RATIO) * 100;
+		mandTotalExcess = mandSum - (maxSum / TOTAL_BOLTON_RATIO) * 100;
 		if (totalRatio < TOTAL_BOLTON_RATIO){
 			isMaxTotalExcess = true;
 		}
@@ -33,8 +33,8 @@ public class BoltonAnalysis {
 	}
 	public void calculateAnteriorBolton( double maxAntSum, double mandAntSum){
 		anteriorRatio = (mandAntSum / maxAntSum) * 100;
-		maxAntExcess = (maxAntSum - mandAntSum) / ANTERIOR_BOLTON_RATIO * 100;
-		mandAntExcess = (mandAntSum - maxAntSum) / ANTERIOR_BOLTON_RATIO * 100;
+		maxAntExcess = maxAntSum - (mandAntSum / ANTERIOR_BOLTON_RATIO) * 100;
+		mandAntExcess = mandAntSum - (maxAntSum / ANTERIOR_BOLTON_RATIO) * 100;
 		if (anteriorRatio < ANTERIOR_BOLTON_RATIO){
 			isMaxAntExcess = true;
 		}
