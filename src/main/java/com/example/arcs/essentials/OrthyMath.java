@@ -330,4 +330,5 @@ public class OrthyMath{
 			return new Point2D(x1, y2);
 		}
 	}
+
 }

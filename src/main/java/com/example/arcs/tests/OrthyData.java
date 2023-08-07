@@ -14,44 +14,14 @@ import java.util.List;
  *
  */
 public class OrthyData {
-
-	public static List<OrthyTooth> extractData(String filePath) throws IOException {
-		List<OrthyTooth> teeth = new ArrayList<>();
-		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-			String line;
-			int lineNumber = 0;
-			while ((line = br.readLine()) != null) {
-				lineNumber++;
-				if (line.startsWith("Layer") || line.trim().isEmpty()) {
-					continue;  // Skip the layer and blank lines
-				}
-				String[] values = line.split(",");
-				if (values.length < 7) {
-					//System.out.println("Skipping line " + lineNumber);
-					continue;
-				}
-				try {
-					teeth.add(new OrthyTooth(values[0].trim(), Double.parseDouble(values[1]), Double.parseDouble(values[2]), Double.parseDouble(values[3]), Double.parseDouble(values[4]), Double.parseDouble(values[5]), Double.parseDouble(values[6])));  // Setting extrusion to 0.0 as it's not present in the CSV
-				} catch (NumberFormatException e) {
-					//System.out.println("Skipping line " + lineNumber + "
-					// due to non-numeric values.");
-				}
-			}
-		}
-		return teeth;
-	}
-	public static void writeTeethToCSV(List<OrthyTooth> teeth, String outputPath) throws IOException {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputPath))) {
-			// Writing the headers
-			bw.write("Teeth,TIP,Rotation,Torque,Buccal-Lingual,Extrusion/Intrusion,Mesial-Distal\n");
-
-			// Writing each tooth data
-			for (OrthyTooth tooth : teeth) {
-				bw.write(String.format("%s,%f,%f,%f,%f,%f,%f\n",
-						tooth.name, tooth.tip, tooth.rotation, tooth.torque,
-						tooth.BL, tooth.IE, tooth.MD));
-			}
-		}
+	public static void getOrthyData() throws IOException {
+		String inputFilePath = getSelectedFilePath();
+		String outputFilePath = getSelectedFilePath();
+		String outputFilePath2 = getSelectedFilePath();
+		transformDentalData(inputFilePath, outputFilePath);
+		List<OrthyTooth> teeth = extractData(outputFilePath);
+		writeTeethToCSV(teeth, outputFilePath2);
+		printTeeth(teeth);
 	}
 	public static void transformDentalData(String inputFilePath, String outputFilePath) {
 		try (CSVReader reader = new CSVReader(new FileReader(inputFilePath));
@@ -63,7 +33,7 @@ public class OrthyData {
 			// Start with an empty row
 			transformedData.add(new String[]{null, null, null, null, null, null, null});
 			// Add the "Layer1" subheading
-			transformedData.add(new String[]{"Layer1", null, null, null, null, null, null});
+			transformedData.add(new String[]{"Upper Jaw - Layer1", null, null, null, null, null, null});
 
 			// Skip metadata and add the actual data
 			for (int i = 20; i < allElements.size(); i++) {
@@ -84,10 +54,69 @@ public class OrthyData {
 		}
 	}
 
+	public static List<OrthyTooth> extractData(String filePath) throws IOException {
+		List<OrthyTooth> teeth = new ArrayList<>();
+		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+			String line;
+			int lineNumber = 0;
+			while ((line = br.readLine()) != null) {
+				lineNumber++;
+
+				if (line.startsWith("Upper jaw - Layer1")) {
+					continue;  // Skip the layer subheading
+				}
+				if (line.startsWith("Lower jaw - Layer1")) {
+					continue;  // Skip the headers
+				}
+				if (line.startsWith("Layer")) {
+					continue;  // Skip the layer subheading
+				}
+				if (line.trim().isEmpty()) {
+					continue;  // Skip empty lines
+				}
+				String[] values = line.split(",");
+				if (values.length < 7) {
+					System.out.println("Skipping line " + lineNumber + " due to insufficient columns.");
+					continue;
+				}
+				try {
+					teeth.add(new OrthyTooth(values[0].trim(), Double.parseDouble(values[1]), Double.parseDouble(values[2]), Double.parseDouble(values[3]), Double.parseDouble(values[4]), Double.parseDouble(values[5]), Double.parseDouble(values[6])));
+				} catch (NumberFormatException e) {
+					System.out.println("Skipping line " + lineNumber + " due to non-numeric values.");
+				}
+			}
+		}
+		return teeth;
+	}
+
+
+	public static void writeTeethToCSV(List<OrthyTooth> teeth, String outputPath) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputPath))) {
+			// Writing the headers
+			bw.write("Teeth,TIP,Rotation,Torque,Buccal-Lingual,Extrusion/Intrusion,Mesial-Distal\n");
+			// Writing each tooth data
+			for (OrthyTooth tooth : teeth) {
+				bw.write(String.format("%s,%f,%f,%f,%f,%f,%f\n",
+						tooth.name, tooth.tip, tooth.rotation, tooth.torque,
+						tooth.BL, tooth.IE, tooth.MD));
+			}
+		} catch (FileNotFoundException e) {
+			// Notify the user if the file is in use
+			JOptionPane.showMessageDialog(null, "File is currently open or in use. Please close the file and try again.", "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (IOException e) {
+			// Handle other IO exceptions
+			JOptionPane.showMessageDialog(null, "An error occurred while writing to the file.", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
 	public static String getSelectedFilePath() {
 		JFileChooser fileChooser = new JFileChooser();
-		int returnValue = fileChooser.showOpenDialog(null);
 
+		// Set the default directory
+		File defaultDirectory = new File("C:\\Users\\User\\Documents\\DataCompare"); // Replace with your desired path
+		fileChooser.setCurrentDirectory(defaultDirectory);
+
+		int returnValue = fileChooser.showOpenDialog(null);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			return fileChooser.getSelectedFile().getAbsolutePath();
 		} else {
@@ -95,9 +124,6 @@ public class OrthyData {
 		}
 	}
 	public static void printTeeth(List<OrthyTooth> teeth) throws IOException {
-		String selectedFilePath = "C:\\Users\\User\\Documents\\DataCompare\\outputCSV_MAX.csv";
-		List<OrthyTooth> teethTemp = extractData(selectedFilePath);
-
 		// Initialize layer counter
 		int layerNumber = 1;
 		String valueHeader = String.format("%s\t%s\t\t%s\t\t%s\t\t%s\t\t%s\t" +
@@ -108,9 +134,9 @@ public class OrthyData {
 		System.out.println(valueHeader);
 
 
-		for (OrthyTooth tooth : teethTemp) {
+		for (OrthyTooth tooth : teeth) {
 			// If the current tooth name is "18", check if it's the start of a new layer
-			if ("18".equals(tooth.name)) {
+			if ("18".equals(tooth.name) || "48".equals(tooth.name)) {
 				if (layerNumber > 1) {  // Skip for the first layer
 					System.out.println("\n=== Layer " + layerNumber + " ===");
 					System.out.println(valueHeader);
@@ -123,8 +149,9 @@ public class OrthyData {
 	}
 
 	public static void main(String args[]) throws IOException {
-//		System.out.println(getSelectedFilePath());
-//		writeTeethToCSV(extractData(getSelectedFilePath()), getSelectedFilePath());
-//		printTeeth(extractData(getSelectedFilePath()));
+//		getOrthyData();
+		printTeeth(extractData(getSelectedFilePath()));
+		System.out.println("Done");
+		printTeeth(extractData(getSelectedFilePath()));
 	}
 }

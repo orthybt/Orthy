@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 public class DrawLineButtonHandler implements EventHandler<MouseEvent> {
 	private Pane drawingPane;
 	private TextArea textArea;
+	private double sum = 0; // sum of all line lengths
 
 	public DrawLineButtonHandler(Pane drawingPane, TextArea textArea) {
 		this.drawingPane = drawingPane;
@@ -29,8 +30,9 @@ public class DrawLineButtonHandler implements EventHandler<MouseEvent> {
 		}
 		if (Cloud.getInstance().getCalibrationHandler().isCalibrationInitialized()){
 			double lineLength = Cloud.getInstance().getLineHandler().getLineLengthTemp();
+			sum  = sum + lineLength;
 			String lineLengthString = String.format("%.1f", lineLength);
-			textArea.setText("Line length: " + lineLengthString + " mm");
+			textArea.setText("Line length: " + lineLengthString + " mm"+"\n" + "Total length: %.1f" + sum + " mm");
 		}
 	}
 }

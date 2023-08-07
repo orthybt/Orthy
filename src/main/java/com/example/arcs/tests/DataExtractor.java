@@ -80,8 +80,11 @@ public class DataExtractor {
 	public static void main(String[] args) throws IOException {
 
 
-		String selectedFilePath = "C:\\Users\\User\\Documents\\DataCompare\\outputCSV_MAX.csv";
-		List<OrthyTooth> teeth = extractData(selectedFilePath);
+		String selectedFilePath = "C:\\Users\\User\\Documents\\DataCompare" +
+				"\\outputCSV_TransformData.csv";
+		String altPath = "C:\\Users\\User\\Documents\\DataCompare" +
+				"\\outputCSV_MAX.csv";
+		List<OrthyTooth> teeth = extractData(altPath);
 
 		// Initialize layer counter
 		int layerNumber = 1;

@@ -21,6 +21,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 
+import static com.example.arcs.tests.OrthoBiomechanics.*;
+
 public class OrthyController {
 	/**
 	 * Cloud access
@@ -39,6 +41,8 @@ public class OrthyController {
 	/**
 	 * Gui elements
 	 */
+	@FXML
+	private Pane mainPane;
 	@FXML
 	private ImageView imageView;
 	@FXML
@@ -64,6 +68,18 @@ public class OrthyController {
 	@FXML
 	private Button drawLineButton;
 	@FXML
+	private Button calculateMovementButton;
+	@FXML
+	private TextField boltonUpperSumTextField;
+	@FXML
+	private TextField boltonLowerSumTextField;
+	@FXML
+	private TextField boltonUpperAntSumTextField;
+	@FXML
+	private TextField boltonLowerAntSumTextField;
+	@FXML
+	private Button calculateBoltonButton;
+	@FXML
 	private Button clearButton;
 	@FXML
 	private StackPane stackPane;
@@ -73,6 +89,11 @@ public class OrthyController {
 	private Pane drawingPane;
 	@FXML
 	private TextArea textArea;
+	@FXML
+	private TextField blValueTextField;
+	@FXML
+	private TextField mdValueTextField;
+
 
 	/**
 	 * The main method that initialize the controller class and assigns the button handlers.
@@ -106,6 +127,7 @@ public class OrthyController {
 		decreaseArcWidthButton.setOnAction(event -> decreaseArcWidth());
 		increaseArcHeightButton.setOnAction(event -> increaseArcHeight());
 		decreaseArcHeightButton.setOnAction(event -> decreaseArcHeight());
+		calculateMovementButton.setOnAction(event -> calculateMovement());
 		clearButton.setOnAction(event -> handleClearButton());
 	}
 
@@ -122,6 +144,15 @@ public class OrthyController {
 		if (!stackPane.getChildren().contains(drawingPane)) {
 			stackPane.getChildren().add(1, drawingPane);
 		}
+		mainPane.setOnKeyPressed(event -> {
+			if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+				calculateMovement();
+				blValueTextField.requestFocus();
+			} else if (event.getCode() == javafx.scene.input.KeyCode.ESCAPE) {
+				handleClearButton();
+			}
+		});
+		mainPane.setFocusTraversable(true);
 	}
 	@FXML
 	private void loadImage() {
@@ -193,6 +224,10 @@ public class OrthyController {
 	private void decreaseArcHeight() {
 		handleDecreaseHeightButton();
 	}
+	@FXML
+	private void calculateMovement() {
+		handleCalculateMovementButton();
+	}
 	/**
 	 * Calibration Handlers
 	 */
@@ -233,6 +268,54 @@ public class OrthyController {
 		c.getArcHandler().getOrthyArc().modifyRadiusY(-5);
 	}
 	/**
+	 * Calculate Movement Handlers
+	 */
+	private void handleCalculateMovementButton() {
+		// Check if text fields are empty
+		if (blValueTextField.getText().trim().isEmpty() || mdValueTextField.getText().trim().isEmpty()) {
+			showAlert("Input Error", "Please enter values before calculating.");
+			return; // Stop further execution of this method
+		}
+		// Check if text fields contain valid numbers
+		try {
+			Double.parseDouble(blValueTextField.getText().trim());
+			Double.parseDouble(mdValueTextField.getText().trim());
+		} catch (NumberFormatException e) {
+			showAlert("Input Error", "Please enter valid numbers before calculating.");
+			return; // Stop further execution of this method
+		}
+
+		double blValue = Double.parseDouble(blValueTextField.getText());
+		double mdValue = Double.parseDouble(mdValueTextField.getText());
+		//calculate the diagonal movement
+		double diagonalMovement = Math.sqrt(blValue * blValue + mdValue * mdValue);
+		StringBuilder results = new StringBuilder();
+		// Format the diagonalMovement to 2 decimal places
+		results.append("Diagonal movement: ").append(String.format("%.2f", diagonalMovement)).append(" mm\n");
+		if (diagonalMovement > 1.25 * blValue) {
+			results.append("Adjustments needed for BL and MD values.\n");
+		} else {
+			results.append("No adjustments needed for BL and MD values.\n");
+		}
+		// Calculate minimum steps
+		int steps = 1;
+		while (!isValidStep(blValue, mdValue, steps) && steps < 100) {  // Assuming max steps as 100
+			steps++;
+		}
+		if (steps < 100) {
+			results.append("Minimum steps required: ").append(steps).append("\n");
+			double adjustedBL = modifyBL(blValue, mdValue, steps);
+			double adjustedMD = modifyMD(blValue, mdValue, steps);
+			results.append("Adjusted BL value: ").append(String.format("%.2f", adjustedBL)).append(" mm\n");
+			results.append("Adjusted MD value: ").append(String.format("%.2f", adjustedMD)).append(" mm\n");
+
+		} else {
+			results.append("Unable to find a suitable number of steps under the current constraints.\n");
+		}
+		textArea.setText(results.toString());
+		textArea.wrapTextProperty().setValue(true);
+	}
+	/**
 	 * Clear Button Handler
 	 */
 	// TODO: 7/12/2023 escape key to clear the drawingPane
@@ -248,5 +331,15 @@ public class OrthyController {
 			textArea.clear();
 		}
 		drawingPane.getChildren().clear();
+	}
+	/**
+	 * Helper methods
+	 */
+	private void showAlert(String title, String content) {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(content);
+		alert.showAndWait();
 	}
 }

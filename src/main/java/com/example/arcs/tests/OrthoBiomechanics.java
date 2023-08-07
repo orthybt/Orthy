@@ -90,7 +90,7 @@ public class OrthoBiomechanics {
 		frame.setVisible(true);
 	}
 
-	private static boolean isValidStep(double BL, double MD, int steps) {
+	public static boolean isValidStep(double BL, double MD, int steps) {
 		double BLPerStep = BL / steps;
 		double MDPerStep = MD / steps;
 
@@ -106,13 +106,13 @@ public class OrthoBiomechanics {
 
 		return combinedMovement <= allowance;
 	}
-	private static double modifyBL(double BL, double MD, int steps) {
+	public static double modifyBL(double BL, double MD, int steps) {
 		while (BL > 0 && !isValidStep(BL, MD, steps)) {
 			BL -= 0.01;  // decrease by 0.01mm increments
 		}
 		return BL;
 	}
-	private static double modifyMD(double BL, double MD, int steps) {
+	public static double modifyMD(double BL, double MD, int steps) {
 		while (MD > 0 && !isValidStep(BL, MD, steps)) {
 			MD -= 0.01;  // decrease by 0.01mm increments
 		}
