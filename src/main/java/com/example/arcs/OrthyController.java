@@ -1,11 +1,8 @@
 package com.example.arcs;
 
 import com.example.arcs.buttonHandlers.*;
-import com.example.arcs.essentials.CalibrationHandler;
 import com.example.arcs.cloud.Cloud;
-import com.example.arcs.essentials.LineHandler;
-import com.example.arcs.essentials.ArcHandler;
-import com.example.arcs.recycleBin.PointHandler;
+import com.example.arcs.tests.BoltonAnalysis;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -37,6 +34,7 @@ public class OrthyController {
 	DrawArcButtonHandler drawArcButtonHandler;
 	DragArcButtonHandler dragArcButtonHandler;
 	RotateArcButtonHandler rotateArcButtonHandler;
+	BoltonRatioButtonHandler boltonRatioButtonHandler;
 
 	/**
 	 * Gui elements
@@ -70,13 +68,13 @@ public class OrthyController {
 	@FXML
 	private Button calculateMovementButton;
 	@FXML
-	private TextField boltonUpperSumTextField;
+	private TextField maxSumTextField;
 	@FXML
-	private TextField boltonLowerSumTextField;
+	private TextField mandSumTextField;
 	@FXML
-	private TextField boltonUpperAntSumTextField;
+	private TextField maxAntSumTextField;
 	@FXML
-	private TextField boltonLowerAntSumTextField;
+	private TextField mandAntSumTextField;
 	@FXML
 	private Button calculateBoltonButton;
 	@FXML
@@ -113,6 +111,7 @@ public class OrthyController {
 		drawArcButtonHandler = new DrawArcButtonHandler( drawingPane, textArea);
 		dragArcButtonHandler = new DragArcButtonHandler(c.getArcHandler(), drawingPane);
 		rotateArcButtonHandler = new RotateArcButtonHandler(c.getArcHandler(), drawingPane);
+		boltonRatioButtonHandler = new BoltonRatioButtonHandler(textArea);
 		/**
 		 * Assign functions to each button
 		 */
@@ -128,6 +127,7 @@ public class OrthyController {
 		increaseArcHeightButton.setOnAction(event -> increaseArcHeight());
 		decreaseArcHeightButton.setOnAction(event -> decreaseArcHeight());
 		calculateMovementButton.setOnAction(event -> calculateMovement());
+		calculateBoltonButton.setOnAction(event -> calculateBolton());
 		clearButton.setOnAction(event -> handleClearButton());
 	}
 
@@ -228,6 +228,10 @@ public class OrthyController {
 	private void calculateMovement() {
 		handleCalculateMovementButton();
 	}
+	@FXML
+	private void calculateBolton() {
+		handleCalculateBoltonButton();
+	}
 	/**
 	 * Calibration Handlers
 	 */
@@ -315,6 +319,20 @@ public class OrthyController {
 		textArea.setText(results.toString());
 		textArea.wrapTextProperty().setValue(true);
 	}
+	//Calculate Bolton value
+	private void handleCalculateBoltonButton(){
+		BoltonAnalysis boltonAnalysis = new BoltonAnalysis();
+
+		double maxSum = Double.parseDouble(maxSumTextField.getText());
+		double mandSum = Double.parseDouble(mandSumTextField.getText());
+		double maxAnt = Double.parseDouble(maxAntSumTextField.getText());
+		double mandAnt = Double.parseDouble(mandAntSumTextField.getText());
+
+		boltonAnalysis.calculateTotalBolton(maxSum, mandSum);
+		boltonAnalysis.calculateAnteriorBolton(maxAnt, mandAnt);
+
+		boltonRatioButtonHandler.handle(boltonAnalysis);
+	}
 	/**
 	 * Clear Button Handler
 	 */
@@ -327,8 +345,15 @@ public class OrthyController {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.isPresent() && result.get() == ButtonType.OK) {
+			//reset the sum variable in DrawLineButtonHandler
+			drawLineButtonHandler.setSum(0);
+			drawLineButtonHandler.setLineLength(0);
 			// clear the text area as well
 			textArea.clear();
+//			//reset the line lengthTemp
+//			Cloud.getInstance().getLineHandler().setLineLengthTemp(0);
+			//reset the lineLength in DrawLineButtonHandler
+//			drawLineButtonHandler.setLineLength(0);
 		}
 		drawingPane.getChildren().clear();
 	}

@@ -38,7 +38,7 @@ public class LineHandler {
 	public void drawLine(Pane drawingPane){
 		decorateLine(1, Color.BLACK);
 		drawingPane.getChildren().add(line.getLine());
-		//chech if calibration is initialized and calculate line length, if
+		//check if calibration is initialized and calculate line length, if
 		// not, just draw the line
 		if(Cloud.getInstance().getCalibrationHandler().isCalibrationInitialized()){
 			lineLengthTemp = measureLine();
@@ -58,7 +58,6 @@ public class LineHandler {
 		linePoints.clear();
 		isLineInitialized = false;
 		line = new OrthyLine();
-
 	}
 	/**
 	 * Line decoration
@@ -91,5 +90,8 @@ public class LineHandler {
 
 	public double getLineLengthTemp() {
 		return lineLengthTemp;
+	}
+	public void setLineLengthTemp(double lineLengthTemp) {
+		this.lineLengthTemp = lineLengthTemp;
 	}
 }

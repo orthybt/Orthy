@@ -86,14 +86,14 @@
             <TextField fx:id="blValueTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="9" GridPane.rowIndex="9" />
             <TextField fx:id="mdValueTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="9" GridPane.rowIndex="10" />
             <Button fx:id="calculateMovementButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Calculate" GridPane.columnIndex="7" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
-            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Upper" GridPane.columnIndex="7" GridPane.rowIndex="13" />
-            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Lower" GridPane.columnIndex="7" GridPane.rowIndex="14" />
-            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Upper Ant" GridPane.columnIndex="7" GridPane.rowIndex="15" />
-            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Lower Ant" GridPane.columnIndex="7" GridPane.rowIndex="16" />
-            <TextField fx:id="boltonUpperSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="13" />
-            <TextField fx:id="boltonLowerSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="14" />
-            <TextField fx:id="boltonUpperAntSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="15" />
-            <TextField fx:id="boltonLowerAntSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="16" />
+            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Max" GridPane.columnIndex="7" GridPane.rowIndex="13" />
+            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Mand" GridPane.columnIndex="7" GridPane.rowIndex="14" />
+            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Max Ant" GridPane.columnIndex="7" GridPane.rowIndex="15" />
+            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Mand Ant" GridPane.columnIndex="7" GridPane.rowIndex="16" />
+            <TextField fx:id="maxSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="13" />
+            <TextField fx:id="mandSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="14" />
+            <TextField fx:id="maxAntSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="15" />
+            <TextField fx:id="mandAntSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="16" />
             <Button fx:id="calculateBoltonButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Calculate" GridPane.columnIndex="7" GridPane.columnSpan="2147483647" GridPane.rowIndex="17" />
          </children>
          <padding>
