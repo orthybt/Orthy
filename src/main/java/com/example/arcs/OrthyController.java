@@ -325,11 +325,11 @@ public class OrthyController {
 
 		double maxSum = Double.parseDouble(maxSumTextField.getText());
 		double mandSum = Double.parseDouble(mandSumTextField.getText());
-		double maxAnt = Double.parseDouble(maxAntSumTextField.getText());
-		double mandAnt = Double.parseDouble(mandAntSumTextField.getText());
+		//double maxAnt = Double.parseDouble(maxAntSumTextField.getText());
+		//double mandAnt = Double.parseDouble(mandAntSumTextField.getText());
 
 		boltonAnalysis.calculateTotalBolton(maxSum, mandSum);
-		boltonAnalysis.calculateAnteriorBolton(maxAnt, mandAnt);
+		//boltonAnalysis.calculateAnteriorBolton(maxAnt, mandAnt);
 
 		boltonRatioButtonHandler.handle(boltonAnalysis);
 	}

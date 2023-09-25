@@ -87,6 +87,9 @@ public class BoltonAnalysis {
 	}
 
 	// Getters and setters
+	public double getTotalRatio() {
+		return totalRatio;
+	}
 
 
 }

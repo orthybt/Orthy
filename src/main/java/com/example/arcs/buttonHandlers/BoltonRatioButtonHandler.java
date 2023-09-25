@@ -13,9 +13,10 @@ public class BoltonRatioButtonHandler {
 	}
 
 	public void handle(BoltonAnalysis boltonAnalysis) {
-		String result = String.format("%s\n%s",
-				boltonAnalysis.analyzeTotalBolton(),
-				boltonAnalysis.analyzeAnteriorBolton());
+		String result = String.format("%s\n",
+				boltonAnalysis.analyzeTotalBolton());
+		//TBA reconstruct so anteriors and totals can be analyzed separately
+				//				boltonAnalysis.analyzeAnteriorBolton());
 		textArea.setText(result);
 	}
 }

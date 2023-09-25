@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<fx:root fx:id="mainPane" type="Pane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.arcs.OrthyController">
+<fx:root fx:id="mainPane" prefHeight="893.0" prefWidth="1463.0" type="Pane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.arcs.OrthyController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -24,6 +24,10 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
@@ -52,49 +56,56 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <StackPane fx:id="stackPane" GridPane.columnSpan="6" GridPane.rowSpan="17">
+            <StackPane fx:id="stackPane" prefHeight="614.0" prefWidth="683.0" GridPane.columnSpan="10" GridPane.rowSpan="24">
                <children>
                   <Pane fx:id="imagePane">
                      <children>
-                          <ImageView fx:id="imageView" fitHeight="522.0" fitWidth="633.0" pickOnBounds="true" preserveRatio="true">
+                          <ImageView fx:id="imageView" fitHeight="731.0" fitWidth="1032.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@upper.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="drawingPane" layoutX="9.0" layoutY="14.0" prefHeight="539.0" prefWidth="588.0" stylesheets="arcsView.css" />
+                        <Pane fx:id="drawingPane" layoutX="14.0" prefHeight="731.0" prefWidth="999.0" stylesheets="arcsView.css" />
                      </children>
                   </Pane>
                </children>
             </StackPane>
-              <Button fx:id="loadImageButton" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Load" GridPane.columnIndex="7" />
-            <Button fx:id="drawArcButton" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Draw Arc" GridPane.columnIndex="7" GridPane.rowIndex="2" />
-            <Button fx:id="clearButton" focusTraversable="false" layoutX="710.0" layoutY="40.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Clear" GridPane.columnSpan="6" GridPane.rowIndex="17" />
-            <Button fx:id="drawLineButton" focusTraversable="false" layoutX="710.0" layoutY="70.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Draw Line" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-            <Button fx:id="dragArcButton" focusTraversable="false" layoutX="730.0" layoutY="90.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Drag Arc" GridPane.columnIndex="8" GridPane.rowIndex="2" />
-            <Button fx:id="decreaseArcWidthButton" focusTraversable="false" layoutX="530.0" layoutY="90.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Width--" GridPane.columnIndex="9" GridPane.rowIndex="3" />
-            <Button fx:id="increaseArcWidthButton" focusTraversable="false" layoutX="630.0" layoutY="90.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Width++" GridPane.columnIndex="8" GridPane.rowIndex="3" />
-            <Button fx:id="decreaseArcHeightButton" focusTraversable="false" layoutX="530.0" layoutY="120.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Height--" GridPane.columnIndex="9" GridPane.rowIndex="4" />
-            <Button fx:id="increaseArcHeightButton" focusTraversable="false" layoutX="530.0" layoutY="120.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Height++" GridPane.columnIndex="8" GridPane.rowIndex="4" />
-            <Button fx:id="rotateArcButton" focusTraversable="false" layoutX="530.0" layoutY="90.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#rotateArc" text="Rotate Arc" GridPane.columnIndex="9" GridPane.rowIndex="2" />
-            <Button fx:id="calibrateButton" focusTraversable="false" layoutX="737.0" layoutY="61.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Calibrate" GridPane.columnIndex="8" />
-            <Button fx:id="resetCalibrationButton" focusTraversable="false" layoutX="737.0" layoutY="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Reset Calibrate" GridPane.columnIndex="9" />
-            <TextArea fx:id="textArea" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.columnSpan="3" GridPane.rowIndex="6" GridPane.rowSpan="3" />
-            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="BL Movement  (mm)" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="9" />
-            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="MD Movement (mm)" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="10" />
-            <TextField fx:id="blValueTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="9" GridPane.rowIndex="9" />
-            <TextField fx:id="mdValueTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="9" GridPane.rowIndex="10" />
-            <Button fx:id="calculateMovementButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Calculate" GridPane.columnIndex="7" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
-            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Max" GridPane.columnIndex="7" GridPane.rowIndex="13" />
-            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Mand" GridPane.columnIndex="7" GridPane.rowIndex="14" />
-            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Max Ant" GridPane.columnIndex="7" GridPane.rowIndex="15" />
-            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Mand Ant" GridPane.columnIndex="7" GridPane.rowIndex="16" />
-            <TextField fx:id="maxSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="13" />
-            <TextField fx:id="mandSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="14" />
-            <TextField fx:id="maxAntSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="15" />
-            <TextField fx:id="mandAntSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8" GridPane.rowIndex="16" />
-            <Button fx:id="calculateBoltonButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Calculate" GridPane.columnIndex="7" GridPane.columnSpan="2147483647" GridPane.rowIndex="17" />
+              <Button fx:id="loadImageButton" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Load" GridPane.columnIndex="11" />
+            <Button fx:id="drawArcButton" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Draw Arc" GridPane.columnIndex="11" GridPane.rowIndex="2" />
+            <Button fx:id="clearButton" focusTraversable="false" layoutX="710.0" layoutY="40.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Clear" GridPane.columnSpan="9" GridPane.rowIndex="25" />
+            <Button fx:id="drawLineButton" focusTraversable="false" layoutX="710.0" layoutY="70.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Draw Line" GridPane.columnIndex="11" GridPane.rowIndex="1" />
+            <Button fx:id="dragArcButton" focusTraversable="false" layoutX="730.0" layoutY="90.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Drag Arc" GridPane.columnIndex="12" GridPane.rowIndex="2" />
+            <Button fx:id="decreaseArcWidthButton" focusTraversable="false" layoutX="530.0" layoutY="90.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Width--" GridPane.columnIndex="13" GridPane.rowIndex="3" />
+            <Button fx:id="increaseArcWidthButton" focusTraversable="false" layoutX="630.0" layoutY="90.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Width++" GridPane.columnIndex="12" GridPane.rowIndex="3" />
+            <Button fx:id="decreaseArcHeightButton" focusTraversable="false" layoutX="530.0" layoutY="120.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Height--" GridPane.columnIndex="13" GridPane.rowIndex="4" />
+            <Button fx:id="increaseArcHeightButton" focusTraversable="false" layoutX="530.0" layoutY="120.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Height++" GridPane.columnIndex="12" GridPane.rowIndex="4" />
+            <Button fx:id="rotateArcButton" focusTraversable="false" layoutX="530.0" layoutY="90.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#rotateArc" text="Rotate Arc" GridPane.columnIndex="13" GridPane.rowIndex="2" />
+            <Button fx:id="calibrateButton" focusTraversable="false" layoutX="737.0" layoutY="61.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Calibrate" GridPane.columnIndex="12" />
+            <Button fx:id="resetCalibrationButton" focusTraversable="false" layoutX="737.0" layoutY="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Reset Calibrate" GridPane.columnIndex="13" />
+            <TextArea fx:id="textArea" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="11" GridPane.columnSpan="3" GridPane.rowIndex="6" GridPane.rowSpan="3" />
+            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="BL Movement  (mm)" GridPane.columnIndex="11" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="MD Movement (mm)" GridPane.columnIndex="11" GridPane.columnSpan="2" GridPane.rowIndex="10" />
+            <TextField fx:id="blValueTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="13" GridPane.rowIndex="9" />
+            <TextField fx:id="mdValueTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="13" GridPane.rowIndex="10" />
+            <Button fx:id="calculateMovementButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Calculate" GridPane.columnIndex="11" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
+            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Max" GridPane.columnIndex="11" GridPane.rowIndex="13" />
+            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Mand" GridPane.columnIndex="11" GridPane.rowIndex="14" />
+            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Max Ant" GridPane.columnIndex="11" GridPane.rowIndex="15" />
+            <Label focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sum Mand Ant" GridPane.columnIndex="11" GridPane.rowIndex="16" />
+            <TextField fx:id="maxSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="12" GridPane.rowIndex="13" />
+            <TextField fx:id="mandSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="12" GridPane.rowIndex="14" />
+            <TextField fx:id="maxAntSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="12" GridPane.rowIndex="15" />
+            <TextField fx:id="mandAntSumTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="12" GridPane.rowIndex="16" />
+            <Button fx:id="calculateBoltonButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Calculate" GridPane.columnIndex="11" GridPane.columnSpan="2147483647" GridPane.rowIndex="17" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
