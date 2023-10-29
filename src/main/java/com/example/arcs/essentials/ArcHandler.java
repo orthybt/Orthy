@@ -113,7 +113,7 @@ public class ArcHandler {
 			}
 		});
 	}
-	private void decorateArc(int strokeWidth, Color strokeColor, Color fill){
+	public void decorateArc(int strokeWidth, Color strokeColor, Color fill){
 		orthyArc.getArc().setStrokeWidth(strokeWidth);
 		orthyArc.getArc().setStroke(strokeColor);
 		orthyArc.getArc().setFill(fill);
@@ -135,13 +135,4 @@ public class ArcHandler {
 	public void setArcPoints(List<Point2D> arcPoints) {
 		this.arcPoints = arcPoints;
 	}
-//	public void setOrthyArc(OrthyArc orthyArc) {
-//		this.orthyArc = orthyArc;
-//	}
-//	public OrthyArc getTempArc() {
-//		return tempArc;
-//	}
-//	public void setTempArc(OrthyArc tempArc) {
-//		this.tempArc = tempArc;
-//	}
 }

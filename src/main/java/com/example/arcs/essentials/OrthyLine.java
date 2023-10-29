@@ -4,6 +4,10 @@ import com.example.arcs.cloud.Cloud;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;
 
+/**
+ * This is the core entity of the application
+ *
+ */
 public class OrthyLine {
 	/**
 	 * The main class variables
@@ -125,6 +129,7 @@ public class OrthyLine {
 	public void setyInterceptPerpendicular(Double yInterceptPerpendicular) {
 		this.yInterceptPerpendicular = yInterceptPerpendicular;
 	}
+
 	public boolean isLineInitialized() {
 		return isLineInitialized;
 	}

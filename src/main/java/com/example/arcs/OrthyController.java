@@ -158,11 +158,9 @@ public class OrthyController {
 	private void loadImage() {
 		FileChooser fileChooser = new FileChooser();
 
+		String initialDirectory = "C:\\Users\\orthy\\OneDrive\\Desktop\\Work\\";
 		// Set the initial directory
-		fileChooser.setInitialDirectory(new File("C:\\Users\\User\\Desktop" +
-				"\\Orthy\\SS\\Images"
-				));
-
+		fileChooser.setInitialDirectory(new File(initialDirectory));
 		// Add file filters for images
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.*"), new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"), new FileChooser.ExtensionFilter("BMP", "*.bmp"), new FileChooser.ExtensionFilter("GIF", "*.gif"));
 
@@ -319,17 +317,20 @@ public class OrthyController {
 		textArea.setText(results.toString());
 		textArea.wrapTextProperty().setValue(true);
 	}
-	//Calculate Bolton value
-	private void handleCalculateBoltonButton(){
+	/**
+	 * Calculate Bolton value
+	 */
+	private void handleCalculateBoltonButton() {
 		BoltonAnalysis boltonAnalysis = new BoltonAnalysis();
 
-		double maxSum = Double.parseDouble(maxSumTextField.getText());
-		double mandSum = Double.parseDouble(mandSumTextField.getText());
-		//double maxAnt = Double.parseDouble(maxAntSumTextField.getText());
-		//double mandAnt = Double.parseDouble(mandAntSumTextField.getText());
+		double maxSum = parseValueOrDefault(maxSumTextField.getText(), 0.0);
+		double mandSum = parseValueOrDefault(mandSumTextField.getText(), 0.0);
+
+		double maxAnt = parseValueOrDefault(maxAntSumTextField.getText(), 0.0);
+		double mandAnt = parseValueOrDefault(mandAntSumTextField.getText(), 0.0);
 
 		boltonAnalysis.calculateTotalBolton(maxSum, mandSum);
-		//boltonAnalysis.calculateAnteriorBolton(maxAnt, mandAnt);
+		boltonAnalysis.calculateAnteriorBolton(maxAnt, mandAnt);
 
 		boltonRatioButtonHandler.handle(boltonAnalysis);
 	}
@@ -366,5 +367,18 @@ public class OrthyController {
 		alert.setHeaderText(null);
 		alert.setContentText(content);
 		alert.showAndWait();
+	}
+	/**
+	 * Parses the given text to a double. If the text is null or empty, it returns the default value.
+	 *
+	 * @param text         the text to parse
+	 * @param defaultValue the default value to return if the text is null or empty
+	 * @return the parsed double value or the default value
+	 */
+	private double parseValueOrDefault(String text, double defaultValue) {
+		if (text == null || text.trim().isEmpty()) {
+			return defaultValue;
+		}
+		return Double.parseDouble(text);
 	}
 }

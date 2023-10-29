@@ -1,5 +1,7 @@
 package com.example.arcs.tests;
 
+import com.example.arcs.essentials.Printer;
+
 public class BoltonAnalysis {
 
 	private double TOTAL_BOLTON_RATIO = 91.3;
@@ -19,7 +21,8 @@ public class BoltonAnalysis {
 	public void calculateTotalBolton( double maxSum, double mandSum){
 		totalRatio = (mandSum / maxSum) * 100;
 		maxTotalExcess = maxSum - (mandSum / TOTAL_BOLTON_RATIO) * 100;
-		mandTotalExcess = mandSum - (maxSum / TOTAL_BOLTON_RATIO) * 100;
+		Printer.print(mandSum/ TOTAL_BOLTON_RATIO);
+		mandTotalExcess = mandSum - (maxSum / 100) * TOTAL_BOLTON_RATIO;
 		if (totalRatio < TOTAL_BOLTON_RATIO){
 			isMaxTotalExcess = true;
 		}

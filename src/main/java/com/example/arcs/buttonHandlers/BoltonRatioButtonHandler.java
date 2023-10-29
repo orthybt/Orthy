@@ -16,7 +16,7 @@ public class BoltonRatioButtonHandler {
 		String result = String.format("%s\n",
 				boltonAnalysis.analyzeTotalBolton());
 		//TBA reconstruct so anteriors and totals can be analyzed separately
-				//				boltonAnalysis.analyzeAnteriorBolton());
+				boltonAnalysis.analyzeAnteriorBolton();
 		textArea.setText(result);
 	}
 }
